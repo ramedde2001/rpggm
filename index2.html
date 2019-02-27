@@ -1,0 +1,81 @@
+<canvas id="ctx" width="500" height="500" style="border:1px solid #000000;"></canvas>
+<script>
+
+var edx=document.getElementById("ctx").getContext("2d")
+var carecter=new Image();
+carecter.src="character.png"
+var animation=[[0,[0,0]],[1,[0,1,2,3]],[0,[0,1,2,3]],[2,[0,1,2,3]],[3,[0,1,2,3]]]
+var curentanim=0;
+var curentfrm=0;
+var framh=0;
+var deley=0;
+x=0;
+z=0;
+sx=3;
+sz=3;
+function changfrm()
+{
+framh=animation[curentanim][0]
+frams=animation[curentanim][1]
+if(deley>30)
+{
+console.log(curentfrm)
+if ( curentfrm < frams.length-1)
+curentfrm++
+else
+curentfrm=0
+deley=0
+}else
+deley++;
+
+}
+
+function hunkey(event )
+{
+if(event.key=="ArrowRight")
+{
+curentanim=1
+x=x+sx;
+}
+if(event.key=="ArrowDown")
+
+{
+curentanim=2
+z=z+sz;
+}
+if(event.key=="ArrowUp")
+{
+curentanim=3
+z=z-sz;
+
+}
+if(event.key=="ArrowLeft")
+
+{
+curentanim=4
+x=x-sx;
+}
+}
+
+function repeatOften() {
+  // Do whatever
+  edx.clearRect(0,0,500,500);
+
+changfrm()
+
+
+
+
+edx.drawImage(carecter,frams[curentfrm]*16,framh*32,16,28,x,z,16,32);
+
+  requestAnimationFrame(repeatOften);
+}
+requestAnimationFrame(repeatOften);
+document.onkeydown=hunkey;
+ document.onkeyup = myKeyUpHandler;
+
+    function myKeyUpHandler() {
+      curentanim=0
+	  curentfrm=0;
+    }
+</script>
